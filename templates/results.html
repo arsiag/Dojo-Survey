@@ -14,11 +14,13 @@
             <p>Comment:</p>
         </div>
         <div id="right">
-            <p>{{name}}</p>
-            <p>{{location}}</p>
-            <p>{{lang}}</p>
-            <p>{{comment}}</p>
+            <p>{{session['name']}}</p>
+            <p>{{session['location']}}</p>
+            <p>{{session['lang']}}</p>
+            <p>{{session['comment']}}</p>
         </div>
-        <button id="button" type="button">Go Back</button>
+        <form action='/'>
+            <input id="button" type='submit' value='Go Back'>
+        </form>
     </body>
 </html>

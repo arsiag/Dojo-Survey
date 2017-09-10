@@ -7,23 +7,41 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='DojoSurvey.css') }}">
     </head>
     <body>
-        <form action='/results' method='post'>
+        <form action='/verify' method='post'>
             <p>Your Name: <input type='text' name='name'></p>
+            {% with errors = get_flashed_messages(category_filter=["nameError"]) %}
+            {% if errors %}
+            <div class="error">
+                {%- for msg in errors %}
+                <p>{{ msg }}</p>
+                {% endfor -%}
+            </div>
+            {% endif %}
+            {% endwith %}
             <p>Dojo Location: 
-                <select name="location">
-                    <option value="San Jose">San Jose</option>
-                    <option value="Seattle">Seattle</option>
-                    <option value="Dalas">Dalas</option>
+                <select name='location'>
+                    {% for loc in session['locations'] %}
+                        <option name="{{ loc }}" value="{{ loc }}">{{ loc }}</option>
+                    {% endfor %}
                 </select>
             </p>
             <p>Favorite Language:  
-                <select name="lang">
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="Python">Python</option>
-                    <option value="Ruby">Ruby</option>
+                <select name='lang'>
+                    {% for lng in session['languages'] %}
+                        <option name="{{ lng }}" value="{{ lng }}">{{ lng }}</option>
+                    {% endfor %}
                 </select>
             </p>
-            <p>Comments (optional):</p>
+            <p>Comments:</p>
+            {% with errors = get_flashed_messages(category_filter=["commentError"]) %}
+            {% if errors %}
+            <div class="error">
+                {%- for msg in errors %}
+                <p>{{ msg }}</p>
+                {% endfor -%}
+            </div>
+            {% endif %}
+            {% endwith %}
             <textarea name="comment"></textarea>
             <input id="button" type='submit' value='Button'>
         </form>
